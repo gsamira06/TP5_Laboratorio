@@ -11,7 +11,7 @@ import practico5.Entidades.Directorio;
 
 /**
  *
- * @author Cetera Evelyn
+ * @author Grupo 2
  */
 public class Gestion {
     private static final Directorio directorio = new Directorio();
