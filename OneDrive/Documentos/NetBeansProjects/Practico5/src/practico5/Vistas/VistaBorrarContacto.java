@@ -2,8 +2,10 @@
 package practico5.Vistas;
 
 import clasesEstaticas.Gestion;
+import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import practico5.Entidades.Contacto;
 
@@ -56,6 +58,11 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
         jTextFieldDNI.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldDNI.setMinimumSize(new java.awt.Dimension(90, 40));
+        jTextFieldDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldDNIKeyReleased(evt);
+            }
+        });
 
         jListDNI.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -78,6 +85,11 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTableContacto);
 
         jButtonBorrarContacto.setText("Borrar Contacto");
+        jButtonBorrarContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarContactoActionPerformed(evt);
+            }
+        });
 
         jButtonSalir.setText("Salir");
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -118,15 +130,15 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBorrarContacto)
                     .addComponent(jButtonSalir))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,26 +146,36 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
     private void jListDNIValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDNIValueChanged
         // TODO add your handling code here:
-        DefaultTableModel modTabla = new DefaultTableModel();
         
-        Long dniSelect = jListDNI.getSelectedValue();
-        Long tel = Gestion.buscarTelefonoPorDni(dniSelect);
-        if(dniSelect == null) {
+        if(evt.getValueIsAdjusting()){//con este método ignoramos eventos intermedios
             return;
         }
-        DefaultTableModel modelTabla = (DefaultTableModel) jListDNI.getModel();
-        modelTabla.setRowCount(0);//reset
-        
+        Long dniSelect = jListDNI.getSelectedValue();
+            if(dniSelect == null) {
+                return; 
+            }
+        Long tel = Gestion.buscarTelefonoPorDni(dniSelect);
         Contacto c = Gestion.buscarDni(dniSelect);
         if(c == null){
             return;
         }
-        //llenamos la tabla 
+        
+        DefaultTableModel modelTabla = (DefaultTableModel) jTableContacto.getModel();//modelo de tabla
+        modelTabla.setRowCount(0);//reset
+        
+        
+        String ciudad; 
+        if(c.getCiudad() !=null){//Verificamos
+            ciudad = c.getCiudad().getNombre();
+        }else {
+            ciudad = "Sin ciudad";
+        }
+        //acá llenamos la tabla 
         modelTabla.addRow(new Object[] {
             c.getDni(),
             c.getApellido(),
             c.getNombre(),
-            c.getCiudad().getNombre(),
+            ciudad,
             c.getDireccion(),
             tel
         });
@@ -164,6 +186,35 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jTextFieldDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDNIKeyReleased
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();//este metodo obtiene los caracteres ingresados 
+        if(!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c!= KeyEvent.VK_DELETE){ //Esto acepta solo números, espacios y borrados... el resto se bloquea
+            evt.consume(); 
+        }
+        
+        String dniStr = jTextFieldDNI.getText(); 
+        DefaultListModel<Long> mod = new DefaultListModel<>();
+        
+        if(!dniStr.isEmpty()){ 
+            try{ 
+                for (Long d : Gestion.listarDni()) { 
+                    if(String.valueOf(d).startsWith(dniStr)){ 
+                        mod.addElement(d); 
+                    } 
+                } 
+            }catch(NumberFormatException e){ 
+                JOptionPane.showMessageDialog(this,"Debe ser un valor numérico","ERROR",JOptionPane.ERROR_MESSAGE); 
+            } 
+        } 
+        jListDNI.setModel(mod); 
+    }//GEN-LAST:event_jTextFieldDNIKeyReleased
+
+    private void jButtonBorrarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarContactoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButtonBorrarContactoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -52,19 +52,19 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldDNI" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="jTextFieldDNI" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="173" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane2" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="1" min="-2" pref="214" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonBorrarContacto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonSalir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,6 +93,9 @@
           <Dimension value="[90, 40]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldDNIKeyReleased"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -180,6 +183,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Borrar Contacto"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarContactoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSalir">
       <Properties>

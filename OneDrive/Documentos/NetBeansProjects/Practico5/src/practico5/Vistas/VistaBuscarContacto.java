@@ -3,6 +3,7 @@ package practico5;
 
 import practico5.Entidades.Contacto;
 import clasesEstaticas.Gestion;
+import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -243,21 +244,25 @@ public class VistaBuscarContacto extends javax.swing.JInternalFrame {
 
     private void jTextFieldTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyReleased
         // TODO add your handling code here:
-        String telStr = jTextFieldTelefono.getText();
-        DefaultListModel<Long> mod = new DefaultListModel<>();
-        if(!telStr.isEmpty()){
-            try{
-                for (Long t : Gestion.listarTelefonos()) {
-                    if(String.valueOf(t).startsWith(telStr)){
-                        mod.addElement(t);
-                    }
-                }
-            }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(this,"Debe ser un valor numérico","ERROR",JOptionPane.ERROR_MESSAGE);
-            }
+        char c = evt.getKeyChar();//este metodo obtiene los caracteres ingresados 
+        if(!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c!= KeyEvent.VK_DELETE){ //Esto acepta solo números, espacios y borrados... el resto se bloquea
+            evt.consume(); 
         }
-        jListTel.setModel(mod);
         
+        String telStr = jTextFieldDNI.getText(); 
+        DefaultListModel<Long> mod = new DefaultListModel<>(); 
+        if(!telStr.isEmpty()){ 
+            try{ 
+                for (Long d : Gestion.listarDni()) { 
+                    if(String.valueOf(d).startsWith(telStr)){ 
+                        mod.addElement(d); 
+                    } 
+                } 
+            }catch(NumberFormatException e){ 
+                JOptionPane.showMessageDialog(this,"Debe ser un valor numérico","ERROR",JOptionPane.ERROR_MESSAGE); 
+            } 
+        } 
+        jListTel.setModel(mod); 
     }//GEN-LAST:event_jTextFieldTelefonoKeyReleased
  
 
