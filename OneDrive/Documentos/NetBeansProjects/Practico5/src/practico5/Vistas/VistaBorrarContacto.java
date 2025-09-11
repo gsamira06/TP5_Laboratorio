@@ -213,7 +213,7 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
     private void jButtonBorrarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarContactoActionPerformed
         // TODO add your handling code here:
-        
+        //Falta implementar 
     }//GEN-LAST:event_jButtonBorrarContactoActionPerformed
 
 
