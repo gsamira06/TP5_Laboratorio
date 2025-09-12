@@ -1,4 +1,7 @@
 # Carpetas de compilación y generación de NetBeans
+/Practico5-V8.2/build/
+/Practico5-V8.2/dist/
+
 /build/
 dist/
 nbproject/private/
@@ -25,3 +28,9 @@ ehthumbs.db
 nbproject/private/
 nbproject/genfiles.properties
 nbproject/private.properties
+
+# Configuración privada de NetBeans
+/Practico5-V8.2/nbproject/private/
+/Practico5-V8.2/nbproject/build-impl.xml
+/Practico5-V8.2/nbproject/genfiles.properties
+/Practico5-V8.2/nbproject/private.properties
