@@ -1,0 +1,36 @@
+# Carpetas de compilación y generación de NetBeans
+/Practico5-V8.2/build/
+/Practico5-V8.2/dist/
+
+/build/
+dist/
+nbproject/private/
+nbproject/build-impl.xml
+nbproject/private.properties
+
+# Archivos generados automáticamente
+*.class
+*.jar
+*.log
+*.iml
+
+# Configuraciones locales del IDE
+*.swp
+*.DS_Store
+*.orig
+
+# Carpetas del sistema operativo
+Thumbs.db
+ehthumbs.db
+.DS_Store
+
+# Archivos de NetBeans que no deben compartirse
+nbproject/private/
+nbproject/genfiles.properties
+nbproject/private.properties
+
+# Configuración privada de NetBeans
+/Practico5-V8.2/nbproject/private/
+/Practico5-V8.2/nbproject/build-impl.xml
+/Practico5-V8.2/nbproject/genfiles.properties
+/Practico5-V8.2/nbproject/private.properties
