@@ -1,36 +1,43 @@
-# Carpetas de compilación y generación de NetBeans
-/Practico5-V8.2/build/
+# Holaa Eve! Me pareció buena idea reponderte por acá y de paso, lo puede ver alguien más y hasta me puede corregir.
+
+# Estos 2 que siguen abajo no deberían ir. en realidad no debería ir ninguna carpeta que contenga el nombre de un proyecto específico. 
+/Practico5-V8.2/build/ 
 /Practico5-V8.2/dist/
 
+# Y acá está el por qué de lo anterior. Estas líneas que sigen sí son correctas porque abarca en general cualquier carpeta con ese nombre. Los .gitignore son reutilizables! (nosotros no lo "reutilizamos" bien la última vez)
 /build/
 dist/
 nbproject/private/
 nbproject/build-impl.xml
 nbproject/private.properties
 
-# Archivos generados automáticamente
+# Archivos generados automáticamente. Estos están bien pero faltan más
 *.class
 *.jar
 *.log
 *.iml
 
-# Configuraciones locales del IDE
+# Configuraciones locales del IDE. Lo mismo que los anteriores
 *.swp
 *.DS_Store
 *.orig
 
-# Carpetas del sistema operativo
+# Carpetas del sistema operativo. Estos están bien pero faltaría uno
 Thumbs.db
 ehthumbs.db
 .DS_Store
 
-# Archivos de NetBeans que no deben compartirse
+# Estos 3 ya están repetidos más arriba, no hace falta que estén de vuelta
 nbproject/private/
 nbproject/genfiles.properties
 nbproject/private.properties
 
-# Configuración privada de NetBeans
+# Y todos estos restantes están repetidos y además declaran un nombre de un proyecto específico.
 /Practico5-V8.2/nbproject/private/
 /Practico5-V8.2/nbproject/build-impl.xml
 /Practico5-V8.2/nbproject/genfiles.properties
 /Practico5-V8.2/nbproject/private.properties
+
+
+
+Yo lo borraría todo y pegaría el que entregamos con el tp3 que está preparado por si usamos maven o ant en cualquier versión de netbeans y en otros IDEs (en el caso de usar maven).
