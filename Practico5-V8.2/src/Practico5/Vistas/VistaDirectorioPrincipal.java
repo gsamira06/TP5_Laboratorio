@@ -1,9 +1,13 @@
 
-package practico5;
+package Practico5.Vistas;
 
-import practico5.Vistas.VistaAgregarCiudad;
-import practico5.Vistas.VistaBorrarContacto;
-import practico5.Vistas.VistaBuscarTelefonoPorApellido;
+import Practico5.Entidades.Contacto;
+import Practico5.Entidades.Directorio;
+import Practico5.Vistas.VistaAgregarCiudad;
+import Practico5.Vistas.VistaBorrarContacto;
+import Practico5.Vistas.VistaBuscarTelefonoPorApellido;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 
@@ -12,7 +16,16 @@ import practico5.Vistas.VistaBuscarTelefonoPorApellido;
  * @author Cetera Evelyn
  */
 public class VistaDirectorioPrincipal extends javax.swing.JFrame {
+    
+    public static Directorio directorio = new Directorio();
+    public static TreeSet<String> ciudades = new TreeSet<>();
 
+    public static Directorio getDirectorio() {
+        return directorio;
+    }
+
+    
+    
     public VistaDirectorioPrincipal() {
         initComponents();
     }
@@ -272,4 +285,12 @@ public class VistaDirectorioPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemBuscarContacto;
     private javax.swing.JMenu jMenuSalir;
     // End of variables declaration//GEN-END:variables
+
+    public static Set<String> getCiudades() {
+        ciudades.clear();
+        for (Contacto c : directorio.getMapaContacto().values()) {
+            ciudades.add(c.getCiudad());
+        }
+        return ciudades;
+    }
 }

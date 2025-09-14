@@ -1,5 +1,9 @@
 
-package practico5;
+package Practico5.Vistas;
+
+import Practico5.Entidades.Contacto;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -7,10 +11,14 @@ package practico5;
  */
 public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
     
-    
+    private DefaultTableModel modelo = new DefaultTableModel();
     
     public VistaBuscarContactoPorCiudad() {
         initComponents();  
+        armarCabecera();
+        jTablaContactos.setModel(modelo);
+        llenarComboCiudades();
+
     }
 
 
@@ -38,6 +46,11 @@ public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Ciudades:");
 
+        jComboBoxCiudades.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxCiudadesItemStateChanged(evt);
+            }
+        });
         jComboBoxCiudades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCiudadesActionPerformed(evt);
@@ -115,6 +128,11 @@ public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCiudadesActionPerformed
 
+    private void jComboBoxCiudadesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCiudadesItemStateChanged
+        String ciudad = (String) jComboBoxCiudades.getSelectedItem();
+        cargarContactosPorCiudad(ciudad);
+    }//GEN-LAST:event_jComboBoxCiudadesItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBoxCiudades;
@@ -124,4 +142,39 @@ public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablaContactos;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabecera() {
+        modelo.addColumn("DNI");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Ciudad");
+        modelo.addColumn("Teléfono");
+        jTablaContactos.setModel(modelo);
+    }
+
+    private void llenarComboCiudades() {
+        jComboBoxCiudades.removeAllItems();
+        for (String ciudad : VistaDirectorioPrincipal.getCiudades()) {
+            jComboBoxCiudades.addItem(ciudad);
+        }
+    }
+
+    private void cargarContactosPorCiudad(String ciudad) {
+        ArrayList<Contacto> lista = VistaDirectorioPrincipal.getDirectorio().buscarContactos(ciudad);
+        modelo.setRowCount(0);
+
+        for (Contacto c : lista) {
+            Long telefono = VistaDirectorioPrincipal.getDirectorio().buscarTelPorDni(c.getDni());
+            Object[] fila = {
+                c.getDni(),
+                c.getApellido(),
+                c.getNombre(),
+                c.getDireccion(),
+                c.getCiudad(),
+                telefono
+            };
+            modelo.addRow(fila);
+        }
+    }
 }

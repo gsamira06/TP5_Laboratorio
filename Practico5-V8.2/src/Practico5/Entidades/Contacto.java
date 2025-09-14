@@ -1,5 +1,5 @@
 
-package practico5.Entidades;
+package Practico5.Entidades;
 
 /**
  *

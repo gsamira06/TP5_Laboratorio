@@ -1,10 +1,10 @@
 
-package practico5;
+package Practico5.Vistas;
 
-import practico5.Entidades.Contacto;
+import Practico5.Entidades.Contacto;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import practico5.Entidades.Directorio;
+import Practico5.Entidades.Directorio;
 
 
 /**
@@ -62,14 +62,13 @@ public class VistaAgregarContacto extends javax.swing.JInternalFrame {
         jLabelDni.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelDni.setText("DNI:");
 
-        jTextFieldDNI.setBackground(new java.awt.Color(51, 102, 0));
-        jTextFieldDNI.setForeground(new java.awt.Color(51, 102, 0));
+        jTextFieldDNI.setBackground(new java.awt.Color(0, 153, 51));
         jTextFieldDNI.setCaretColor(new java.awt.Color(51, 102, 0));
 
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelNombre.setText("Nombre");
 
-        jTextFieldNombre.setBackground(new java.awt.Color(0, 102, 51));
+        jTextFieldNombre.setBackground(new java.awt.Color(51, 153, 0));
 
         jLabelApellido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelApellido.setText("Apellido");
@@ -87,7 +86,7 @@ public class VistaAgregarContacto extends javax.swing.JInternalFrame {
         jLabelDomicilio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelDomicilio.setText("Dirección");
 
-        jTextFieldDireccion.setBackground(new java.awt.Color(51, 51, 0));
+        jTextFieldDireccion.setBackground(new java.awt.Color(102, 102, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

@@ -1,20 +1,19 @@
 
-package practico5.Vistas;
+package Practico5.Vistas;
 
 import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
-import practico5.Entidades.Contacto;
-import practico5.Entidades.Directorio;
+import Practico5.Entidades.Contacto;
+import Practico5.Entidades.Directorio;
 
 /**
  *
  * @author Cetera Evelyn
  */
 public class VistaBorrarContacto extends javax.swing.JInternalFrame {
-
-
-            
+    private DefaultTableModel modelo = new DefaultTableModel();
+         
     public VistaBorrarContacto() {
         initComponents();
         llenarListaDNI();
@@ -81,6 +80,11 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTableContacto);
 
         jButtonBorrarContacto.setText("Borrar Contacto");
+        jButtonBorrarContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarContactoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,31 +130,49 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
     private void jListDNIValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDNIValueChanged
         // TODO add your handling code here:
-        DefaultTableModel modTabla = new DefaultTableModel();
         
         Long dniSelect = jListDNI.getSelectedValue();
-        Long tel = Directorio.buscarTelPorDni(dniSelect);
-        if(dniSelect == null) {
-            return;
-        }
-        DefaultTableModel modelTabla = (DefaultTableModel) jListDNI.getModel();
-        modelTabla.setRowCount(0);//reset
         
-        Contacto c = Directorio.buscarDni(dniSelect);
-        if(c == null){
-            return;
-        }
-        //llenamos la tabla 
-        modelTabla.addRow(new Object[] {
-            c.getDni(),
-            c.getApellido(),
-            c.getNombre(),
-            c.getCiudad(),
-            c.getDireccion(),
-            tel
-        });
         
+        if(dniSelect != null) {
+            jTextFieldDNI.setText(String.valueOf(dniSelect));
+            
+            Contacto c = Directorio.buscarDni(dniSelect);
+            Long tel = Directorio.buscarTelPorDni(dniSelect);
+            
+            
+            if (c != null && tel != null) {
+            modelo.setRowCount(0); //reset
+            modelo.addRow(new Object[]{
+                c.getDni(),
+                c.getApellido(),
+                c.getNombre(),
+                c.getDireccion(),
+                c.getCiudad(),
+                tel
+            });
+        }
+        }
+        
+     
     }//GEN-LAST:event_jListDNIValueChanged
+
+    private void jButtonBorrarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarContactoActionPerformed
+        // TODO add your handling code here:
+        Long dni = jListDNI.getSelectedValue();
+
+        if (dni != null) {
+            Long telefono = Directorio.buscarTelPorDni(dni);
+
+            if (telefono != null) {
+                Directorio.borrarContactos(telefono);
+
+                llenarListaDNI(); // recargamos la lista
+                jTextFieldDNI.setText("");
+                modelo.setRowCount(0); //reset
+            }
+        }
+    }//GEN-LAST:event_jButtonBorrarContactoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -163,4 +185,14 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableContacto;
     private javax.swing.JTextField jTextFieldDNI;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabecera(){
+    modelo.addColumn("DNI");
+    modelo.addColumn("Apellido");
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Direccion");
+    modelo.addColumn("Ciudad");
+    modelo.addColumn("Teléfono");
+    jTableContacto.setModel(modelo);
+}
 }
