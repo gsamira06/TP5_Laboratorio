@@ -1,41 +1,18 @@
 
 package practico5;
 
-
-import java.util.ArrayList;
-import java.util.Map;
-import javax.swing.table.DefaultTableModel;
-import practico5.Entidades.Contacto;
-import practico5.Entidades.Directorio;
-
-
-
 /**
  *
  * @author Cetera Evelyn
  */
 public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
     
-    private DefaultTableModel tablaDire;//Cree la tabla
     
     
     public VistaBuscarContactoPorCiudad() {
         initComponents();  
-        configTabla();
     }
-    
-    private void configTabla(){
-        tablaDire = new DefaultTableModel();
-        tablaDire.addColumn("DNI");
-        tablaDire.addColumn("Nombre");
-        tablaDire.addColumn("Apellido");
-        tablaDire.addColumn("Ciudad");
-        tablaDire.addColumn("Dirección");
-        tablaDire.addColumn("Teléfono");
-        
-        jTablaContactos.setModel(tablaDire);
-        
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,29 +113,6 @@ public class VistaBuscarContactoPorCiudad extends javax.swing.JInternalFrame {
 
     private void jComboBoxCiudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCiudadesActionPerformed
         // TODO add your handling code here:
-        tablaDire.setRowCount(0); //reset
-
-        String c = String.valueOf(jComboBoxCiudades.getSelectedItem());
-        ArrayList<Contacto> contacto = Directorio.buscarContactos(c);
-        Long tel = null;
-        for (Contacto aux : contacto) {
-            
-            for(Map.Entry<Long,Contacto> entry : Directorio.getMapaContacto().entrySet()){
-                if(entry.getValue().equals(aux)){
-                    tel = entry.getKey();
-                    break;
-                }
-            
-            }
-            tablaDire.addRow(new Object[]{ 
-                                          aux.getDni(),
-                                          aux.getNombre(),
-                                          aux.getApellido(),
-                                          aux.getCiudad(),
-                                          aux.getDireccion(),
-                                          tel});
-            
-        }
     }//GEN-LAST:event_jComboBoxCiudadesActionPerformed
 
 

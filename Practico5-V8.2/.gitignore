@@ -1,12 +1,27 @@
-# Carpetas de compilación y generación de NetBeans
-/Practico5-V8.2/build/
-/Practico5-V8.2/dist/
 
 /build/
 dist/
 nbproject/private/
 nbproject/build-impl.xml
-nbproject/private.properties
+nbproject/project.properties 
+
+# === Carpetas de salida === 
+build/ 
+dist/ 
+out/ 
+target/
+
+# === Archivos temporales === 
+*.log 
+*.bak 
+*.tmp 
+*.swp 
+*~ 
+
+# === Configuración de otros IDEs === 
+*.iml 
+.idea/ 
+.vscode/ 
 
 # Archivos generados automáticamente
 *.class
@@ -20,17 +35,15 @@ nbproject/private.properties
 *.orig
 
 # Carpetas del sistema operativo
+.DS_Store
 Thumbs.db
 ehthumbs.db
-.DS_Store
 
-# Archivos de NetBeans que no deben compartirse
-nbproject/private/
-nbproject/genfiles.properties
-nbproject/private.properties
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
 
-# Configuración privada de NetBeans
-/Practico5-V8.2/nbproject/private/
-/Practico5-V8.2/nbproject/build-impl.xml
-/Practico5-V8.2/nbproject/genfiles.properties
-/Practico5-V8.2/nbproject/private.properties
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
