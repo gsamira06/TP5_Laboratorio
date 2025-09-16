@@ -49,12 +49,10 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jLabelTitulo.setBackground(new java.awt.Color(204, 255, 204));
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(153, 204, 255));
         jLabelTitulo.setText("Borrar Contacto");
-        jLabelTitulo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setBackground(new java.awt.Color(51, 0, 0));
         jLabel1.setText("DNI:");
 
         jTextFieldDNI.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -118,7 +116,7 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addComponent(jButtonBorrarContacto)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
