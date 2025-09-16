@@ -1,17 +1,26 @@
 
-package practico5.Vistas;
+package Practico5.Vistas;
+
+import Practico5.Entidades.Contacto;
+import java.util.Collection;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Cetera Evelyn
  */
 public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultListModel<String> listaDeApellidos = new DefaultListModel<>();
     /**
      * Creates new form VistaBuscarTelefonoPorApellido
      */
     public VistaBuscarTelefonoPorApellido() {
         initComponents();
+        armarCabecera();
+        jLApellido.setModel(listaDeApellidos);
+        llenarListaDeApellidos();
     }
 
     /**
@@ -25,11 +34,11 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldApellido = new javax.swing.JTextField();
+        jTApellido = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jLApellido = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTCliente = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -39,9 +48,14 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Apellido:");
 
-        jScrollPane1.setViewportView(jList1);
+        jLApellido.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jLApellidoValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jLApellido);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -60,7 +74,7 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTCliente);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +88,7 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                            .addComponent(jTApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -91,7 +105,7 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 27, Short.MAX_VALUE))
+                            .addComponent(jTApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,14 +115,65 @@ public class VistaBuscarTelefonoPorApellido extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLApellidoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLApellidoValueChanged
+        // TODO add your handling code here:
+        String apellido = jLApellido.getSelectedValue();
+
+        if (apellido != null) {
+            Contacto c = VistaDirectorioPrincipal.getDirectorio().buscarPorApellido(apellido);
+
+            if (c != null) {
+                Long telefono = VistaDirectorioPrincipal.getDirectorio().buscarTelefonoPorApellido(apellido);
+                cargarContactoEnTabla(c, telefono);
+                jTApellido.setText(c.getApellido());
+            }
+        }
+    }//GEN-LAST:event_jLApellidoValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> jLApellido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextFieldApellido;
+    private javax.swing.JTextField jTApellido;
+    private javax.swing.JTable jTCliente;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabecera() {
+        modelo.addColumn("DNI");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Direccion");
+        modelo.addColumn("Ciudad");
+        modelo.addColumn("Teléfono");
+        jTCliente.setModel(modelo);
+    }
+
+    private void cargarContactoEnTabla(Contacto c, Long telefono) {
+        modelo.setRowCount(0);
+
+        Object[] fila = {
+            c.getDni(),
+            c.getNombre(),
+            c.getApellido(),
+            c.getCiudad(),
+            c.getDireccion(),
+            telefono
+        };
+
+        modelo.addRow(fila);
+    }
+
+    private void llenarListaDeApellidos() {
+        listaDeApellidos.clear();
+
+        Collection<Contacto> contactos = VistaDirectorioPrincipal.getDirectorio().mapaContacto.values();
+
+        for (Contacto c : contactos) {
+            listaDeApellidos.addElement(c.getApellido());
+        }
+    }
+
 }

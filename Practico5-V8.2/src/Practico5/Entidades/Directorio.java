@@ -1,5 +1,5 @@
 
-package practico5.Entidades;
+package Practico5.Entidades;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import java.util.TreeMap;
  */
 public class Directorio {
     
-    private static TreeMap<Long, Contacto> mapaContacto = new TreeMap<>();
+    public static TreeMap<Long, Contacto> mapaContacto = new TreeMap<>();
     //Extra
     public  static Set<String> listaCiudades = new HashSet<>();
 
@@ -117,8 +117,25 @@ public class Directorio {
         return null;
     }
             
+    public Contacto buscarPorApellido(String ap) {
+    for (Contacto c : mapaContacto.values()) {
+        if (c.getApellido() == ap) {
+            return c;
+        }
+    }
+    return null;
+}
+
+public Long buscarTelefonoPorApellido(String ap) {
+    for (Map.Entry<Long, Contacto> entry : mapaContacto.entrySet()) {
+        if (entry.getValue().getApellido() == ap) {
+            return entry.getKey();
+        }
+    }
+    return null;
+}
+
     
     
     
-    
-}//CIERRE DIRECTORIO
+}

@@ -1,10 +1,10 @@
 
-package practico5;
+package Practico5.Vistas;
 
-import practico5.Entidades.Contacto;
+import Practico5.Entidades.Contacto;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import practico5.Entidades.Directorio;
+import Practico5.Entidades.Directorio;
 
 
 

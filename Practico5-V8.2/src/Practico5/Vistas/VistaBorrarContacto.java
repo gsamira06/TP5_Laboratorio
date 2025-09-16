@@ -1,20 +1,20 @@
 
-package practico5.Vistas;
+package Practico5.Vistas;
 
 import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
-import practico5.Entidades.Contacto;
-import practico5.Entidades.Directorio;
+import Practico5.Entidades.Contacto;
+import Practico5.Entidades.Directorio;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Cetera Evelyn
  */
 public class VistaBorrarContacto extends javax.swing.JInternalFrame {
-
-
-            
+    
+         
     public VistaBorrarContacto() {
         initComponents();
         llenarListaDNI();
@@ -49,12 +49,10 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jLabelTitulo.setBackground(new java.awt.Color(204, 255, 204));
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(153, 204, 255));
         jLabelTitulo.setText("Borrar Contacto");
-        jLabelTitulo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setBackground(new java.awt.Color(51, 0, 0));
         jLabel1.setText("DNI:");
 
         jTextFieldDNI.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -77,10 +75,23 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
             new String [] {
                 "DNI", "Apellido", "Nombre", "Direccion", "Ciudad", "Telefono"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTableContacto);
 
         jButtonBorrarContacto.setText("Borrar Contacto");
+        jButtonBorrarContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarContactoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +129,7 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addComponent(jButtonBorrarContacto)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,31 +137,51 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
     private void jListDNIValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDNIValueChanged
         // TODO add your handling code here:
-        DefaultTableModel modTabla = new DefaultTableModel();
-        
         Long dniSelect = jListDNI.getSelectedValue();
-        Long tel = Directorio.buscarTelPorDni(dniSelect);
-        if(dniSelect == null) {
+        
+        if(dniSelect==null){
             return;
         }
-        DefaultTableModel modelTabla = (DefaultTableModel) jListDNI.getModel();
-        modelTabla.setRowCount(0);//reset
-        
         Contacto c = Directorio.buscarDni(dniSelect);
-        if(c == null){
+        if (c==null) {
             return;
         }
-        //llenamos la tabla 
-        modelTabla.addRow(new Object[] {
-            c.getDni(),
-            c.getApellido(),
-            c.getNombre(),
-            c.getCiudad(),
-            c.getDireccion(),
-            tel
-        });
+        Long tel = Directorio.buscarTelPorDni(dniSelect);
         
+        DefaultTableModel modelo = (DefaultTableModel) jTableContacto.getModel();
+        modelo.setRowCount(0); //reset
+        
+            //llenamos la tabla
+            modelo.addRow(new Object[]{
+                c.getDni(),
+                c.getApellido(),
+                c.getNombre(),
+                c.getDireccion(),
+                c.getCiudad(),
+                tel
+            });
+        
+        
+        
+     
     }//GEN-LAST:event_jListDNIValueChanged
+
+    private void jButtonBorrarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarContactoActionPerformed
+        // TODO add your handling code here:
+        int filaSelect = jTableContacto.getSelectedRow();//Primero hay que captar que fila está seleccionada
+        if (filaSelect == -1) { //verificamos que haya una fila seleccionada
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un contacto!");
+            return;
+        }
+        DefaultTableModel modelo = (DefaultTableModel) jTableContacto.getModel();
+        
+        Long tel = (Long) modelo.getValueAt(filaSelect, 5);//como ya tenemos un metodo que usa un telefono para borrar un contacto vamos a usar ese dato
+        
+        Directorio.borrarContactos(tel);//llamamos al metodo y borramos el contacto
+        modelo.removeRow(filaSelect);//borramos de la tabla
+        
+        llenarListaDNI();//actualizamos el JList
+    }//GEN-LAST:event_jButtonBorrarContactoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -163,4 +194,6 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableContacto;
     private javax.swing.JTextField jTextFieldDNI;
     // End of variables declaration//GEN-END:variables
+
+
 }
