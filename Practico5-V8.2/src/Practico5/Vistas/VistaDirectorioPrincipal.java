@@ -63,7 +63,7 @@ public class VistaDirectorioPrincipal extends javax.swing.JFrame {
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 725, Short.MAX_VALUE)
+            .addGap(0, 640, Short.MAX_VALUE)
         );
 
         jDesktopPane1.setLayer(Escritorio, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -76,7 +76,10 @@ public class VistaDirectorioPrincipal extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Escritorio)
+                .addGap(79, 79, 79))
         );
 
         jMenuContacto.setText("Contacto");
