@@ -6,13 +6,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import Practico5.Entidades.Contacto;
 import Practico5.Entidades.Directorio;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Cetera Evelyn
  */
 public class VistaBorrarContacto extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo = new DefaultTableModel();
+    
          
     public VistaBorrarContacto() {
         initComponents();
@@ -76,7 +77,15 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
             new String [] {
                 "DNI", "Apellido", "Nombre", "Direccion", "Ciudad", "Telefono"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTableContacto);
 
         jButtonBorrarContacto.setText("Borrar Contacto");
@@ -130,19 +139,21 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
 
     private void jListDNIValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDNIValueChanged
         // TODO add your handling code here:
-        
         Long dniSelect = jListDNI.getSelectedValue();
         
+        if(dniSelect==null){
+            return;
+        }
+        Contacto c = Directorio.buscarDni(dniSelect);
+        if (c==null) {
+            return;
+        }
+        Long tel = Directorio.buscarTelPorDni(dniSelect);
         
-        if(dniSelect != null) {
-            jTextFieldDNI.setText(String.valueOf(dniSelect));
-            
-            Contacto c = Directorio.buscarDni(dniSelect);
-            Long tel = Directorio.buscarTelPorDni(dniSelect);
-            
-            
-            if (c != null && tel != null) {
-            modelo.setRowCount(0); //reset
+        DefaultTableModel modelo = (DefaultTableModel) jTableContacto.getModel();
+        modelo.setRowCount(0); //reset
+        
+            //llenamos la tabla
             modelo.addRow(new Object[]{
                 c.getDni(),
                 c.getApellido(),
@@ -151,27 +162,27 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
                 c.getCiudad(),
                 tel
             });
-        }
-        }
+        
+        
         
      
     }//GEN-LAST:event_jListDNIValueChanged
 
     private void jButtonBorrarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarContactoActionPerformed
         // TODO add your handling code here:
-        Long dni = jListDNI.getSelectedValue();
-
-        if (dni != null) {
-            Long telefono = Directorio.buscarTelPorDni(dni);
-
-            if (telefono != null) {
-                Directorio.borrarContactos(telefono);
-
-                llenarListaDNI(); // recargamos la lista
-                jTextFieldDNI.setText("");
-                modelo.setRowCount(0); //reset
-            }
+        int filaSelect = jTableContacto.getSelectedRow();//Primero hay que captar que fila está seleccionada
+        if (filaSelect == -1) { //verificamos que haya una fila seleccionada
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un contacto!");
+            return;
         }
+        DefaultTableModel modelo = (DefaultTableModel) jTableContacto.getModel();
+        
+        Long tel = (Long) modelo.getValueAt(filaSelect, 5);//como ya tenemos un metodo que usa un telefono para borrar un contacto vamos a usar ese dato
+        
+        Directorio.borrarContactos(tel);//llamamos al metodo y borramos el contacto
+        modelo.removeRow(filaSelect);//borramos de la tabla
+        
+        llenarListaDNI();//actualizamos el JList
     }//GEN-LAST:event_jButtonBorrarContactoActionPerformed
 
 
@@ -186,13 +197,5 @@ public class VistaBorrarContacto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldDNI;
     // End of variables declaration//GEN-END:variables
 
-private void armarCabecera(){
-    modelo.addColumn("DNI");
-    modelo.addColumn("Apellido");
-    modelo.addColumn("Nombre");
-    modelo.addColumn("Direccion");
-    modelo.addColumn("Ciudad");
-    modelo.addColumn("Teléfono");
-    jTableContacto.setModel(modelo);
-}
+
 }
